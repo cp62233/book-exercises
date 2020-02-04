@@ -38,9 +38,10 @@ View(airports)
 # Which city was flown to with the highest average speed?
 city_highest_avg_spped <- flights %>% 
   group_by(dest) %>% 
-  summarize(avg = mean(air_time, na.rm = TRUE)) %>% 
+  summarize(avg = mean(distance/air_time, na.rm = TRUE)) %>% 
   arrange(-avg) %>% 
   head(1) %>% 
   select(dest) %>% 
   pull()
 print(city_highest_avg_spped)
+airports %>% filter(faa == city_highest_avg_spped)
