@@ -1,1 +1,1 @@
-nyt_key <- "TieWrcIAGGvYhYaPtXDuBEF5xkppzHTj"
+nyt_key <- "TieWrcIAGGvYhYaPtXDuBEf5xkppzHTj"

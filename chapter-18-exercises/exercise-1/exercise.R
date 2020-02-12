@@ -29,24 +29,33 @@ query_params_list <- list("api-key" = nyt_key, "movie_name" = movie_name)
 # Send the HTTP Request to download the data
 # Extract the content and convert it from JSON
 response <- GET(uri, query = query_params_list)
-bdoy <- content(response, "text")
+body <- content(response, "text")
 data <- fromJSON(body)
 
 
 # What kind of data structure did this produce? A data frame? A list?
-
+View(data)
+#It is a list with 5 pairs of keys and values
 
 # Manually inspect the returned data and identify the content of interest 
 # (which are the movie reviews).
 # Use functions such as `names()`, `str()`, etc.
-
+str(data$results[, "summary_short"])
 
 # Flatten the movie reviews content into a data structure called `reviews`
-
+reviews <- data$results[, "summary_short"]
 
 # From the most recent review, store the headline, short summary, and link to
 # the full article, each in their own variables
-
+library(dplyr)
+most_recent <- data$results %>% 
+  arrange(as.Date(date_updated)) %>% 
+  tail(1)
+review_most_recent <- most_recent$summary_short
+headline_most_recent <- most_recent$headline
+link_most_recent <- most_recent$link$url
 
 # Create a list of the three pieces of information from above. 
 # Print out the list.
+most_recent_list <- list(review = review_most_recent, headline = headline_most_recent, link = link_most_recent)
+print(most_recent_list)
